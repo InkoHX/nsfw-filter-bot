@@ -39,10 +39,10 @@ bot.on('message', (message) => {
           .then((msg) => {
             msg.channel.send(new RichEmbed()
               .setColor('RED')
-              .setDescription('送信した画像に不適切な要素が含まれているので削除しました。')
+              .setDescription(`${message.author.tag} が送信した画像に不適切な内容が含まれている可能性があるため削除しました。`)
               .addField('もっとも多く含まれていた要素', result.className)
               .addField('不適切である確率', `${Math.round(result.probability * 100)}%`)
-            ).then(() => msg.delete(5000))
+            )
           })
           .catch(console.error)
       })
