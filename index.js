@@ -35,7 +35,7 @@ bot.on('message', (message) => {
       .then(result => result[0])
       .then((result) => {
         if (result.className === 'Neutral' || result.className === 'Drawing') return // 問題なければ無視
-        message.delete()
+        message.delete() // 画像を削除
           .then((msg) => {
             msg.channel.send(new RichEmbed()
               .setColor('RED')
@@ -44,7 +44,7 @@ bot.on('message', (message) => {
               .addField('不適切である確率', `${Math.round(result.probability * 100)}%`)
             ).then(() => msg.delete(5000))
           })
-          .catch(console.error) // 画像を削除
+          .catch(console.error)
       })
       .catch(console.error)
   }
