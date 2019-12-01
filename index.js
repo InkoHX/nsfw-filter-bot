@@ -1,4 +1,4 @@
-const { Client, TextChannel } = require('discord.js')
+const { Client, TextChannel, RichEmbed } = require('discord.js')
 const { Image, createCanvas } = require('canvas')
 const { NSFWJS } = require('nsfwjs')
 
@@ -37,7 +37,12 @@ bot.on('message', (message) => {
         if (result.className === 'Neutral' || result.className === 'Drawing') return // 問題なければ無視
         message.delete()
           .then((msg) => {
-            msg.channel.send(`不適切と判断した画像を削除しました。\nもっとも多く含まれていた要素: **${result.className} (${Math.round(result.probability * 100)}%)**`)
+            msg.channel.send(new RichEmbed()
+              .setColor('RED')
+              .setDescription('送信した画像に不適切な要素が含まれているので削除しました。')
+              .addField('もっとも多く含まれていた要素', result.className)
+              .addField('不適切である確率', `${Math.round(result.probability * 100)}%`)
+            ).then(() => msg.delete(5000))
           })
           .catch(console.error) // 画像を削除
       })
